@@ -1,60 +1,104 @@
 import random
-
+import math
 class Character:
-    def __init__(self, name, power, health):
+    def __init__(self, name, health, power, stats):
         self.name = name
-        self.power = power
         self.health = health
+        self.power = power
+        self.stats = stats
+        self.power = round(power + (stats["Strength"] * .5)) 
+        self.defense = round((stats["Constitution"] * .25))
+        self.evasion = (stats["Agility"] * .5) / 10
 
-    def attack(self, power, enemy):
-        if enemy == medic:
-            recover_health = random.random()
-            if recover_health <= .20:
-                enemy.health -= power - 2
-                print("The Medic injects herself with a syringe, which is definitely not usually a good idea, and recovered 2 health!")
-            else:
-                enemy.health -= power
-        elif enemy == shadow:
-            null_damage = random.random()
-            if null_damage <= .10:
-                enemy.health -= power
-                print(f"{shadow.name} took no damage from that attack!")
-            else:
-                enemy.health -= power
-        else:    
-            enemy.health -= power
+    def dealdamage(self, enemy):
+        evade = random.random()
+        dmg_amount = self.power - enemy.defense
+        
+
+        if evade <= enemy.evasion:
+            dmg_amount = 0
+            enemy.health = enemy.health
+            print(f"{enemy.name} dodged {self.name}'s attack!")
+            return dmg_amount
+
+        else:
+            enemy.health -= dmg_amount
+        return dmg_amount
     
-    def alive(self, health):
+    def print_status(self):
+        print(f"{self.name} has {self.health} health and {self.power} power.")
+
+    
+    def alive(self):
         if self.health <= 0:
             return True
-    
-    def print_status(self, name, health, power):
-        print(f"{name} has {health} health and {power} power.")
 
 class Hero(Character):
-    def attack(self, power, enemy):
-        double_damage = random.random()
-        if double_damage <= .20:
-            critical_hit = power * 2
-            enemy.health -= critical_hit
-            print("CRITICAL HIT!")
-        else:
-            enemy.health -= power
+        def dealdamage(self,enemy):
+            evade = random.random()
+            dmg_amount = self.power - enemy.defense
+            
+
+            if evade <= enemy.evasion:
+                dmg_amount = 0
+                enemy.health = enemy.health
+                print(f"{enemy.name} dodged {self.name}'s attack!")
+                return dmg_amount
+
+            else:
+                critical_hit = random.random()
+                if critical_hit <= .20:
+                    critical = (self.power * 2) - enemy.defense
+                    enemy.health -= critical            
+                    print("CRITICAL HIT!")
+                    return critical
+
+                elif critical_hit > .20:
+                    enemy.health -= dmg_amount
+                    return dmg_amount
 
 class Berserker(Character):
-    def attack(self, power, enemy):
-        if berserker.health < 15:
-            print("Sweet lord the Berserker has gone nuts and is doing double damage!")
-            enemy.health -= power * 2
-        else:
-            enemy.health -= power
 
-hero = Hero("Maximo", 5, 100)
-goblin = Character("Goblin", 2, 20)
-medic = Character("Medic", 3, 25)
-shadow = Character("Shadow", 10, 1)
-zombie = Character("Zombie", 1, 10)
-berserker = Berserker("Berserker", 10, 30)
+    def dealdamage(self, enemy):
+        evade = random.random()
+        dmg_amount = self.power - enemy.defense
+            
+        if evade <= enemy.evasion:
+            dmg_amount = 0
+            enemy.health = enemy.health
+            print(f"{enemy.name} dodged {self.name}'s attack!")
+            return dmg_amount
+
+        else:
+            if self.health < 15:
+                berserking = self.power * 2
+                enemy.health -= berserking
+                print("Oh God the Berserker has lost too much health and is going nuts! His damage has been doubled!")
+                print("")
+                return berserking
+            else:
+                enemy.health -= dmg_amount
+                return dmg_amount
+
+class Zombie(Character):
+    def alive(self):
+        if self.health <= 0:
+            return False
+
+Humans = {"Strength" : 7, "Agility" : 7, "Constitution" : 7}
+Goblins = {"Strength" : 3, "Agility" : 7, "Constitution": 5 }
+Demons = {"Strength" : 5, "Agility" : 5, "Constitution" : 0}
+Centaurs = {"Strength" : 8, "Agility" : 8, "Constitution" : 5}
+Undead = {"Strength" : 2, "Agility" : 5, "Constitution" : 0}
+Amorphous = {"Strength" : 5, "Agility" : 10, "Constitution" : 5}
+Ogres = {"Strength" : 10, "Agility" : 3, "Constitution" : 8}
+
+hero = Hero("Maximo", 100, 5, Humans)
+goblin = Character("Goblin", 20, 2, Goblins)
+medic = Character("Medic", 25, 3, Humans,)
+shadow = Character("Shadow", 1, 10, Demons)
+zombie = Zombie("Zombie", 10, 1,Undead)
+berserker = Berserker("Berserker", 30, 10, Humans)
 
 def main():
     print("Welcome to the world of...Frank. Yeah, just Frank. He's some guy. I guess he owns the world or something? Wild.")
@@ -66,8 +110,9 @@ def main():
     
     def goblin_battle():    
         while hero.health > 0 and goblin.health > 0:
-            goblin.print_status(goblin.name, goblin.health, goblin.power)
-            hero.print_status(hero.name, hero.health, hero.power)
+            print("")
+            goblin.print_status()
+            hero.print_status()
             print("")
             print("Type the number of the action you wish to take.")
             print("1. Attack")
@@ -77,21 +122,27 @@ def main():
             user_input = input("")
         
             if user_input == "1":
-                hero.attack(hero.power, goblin)
-                print(f"You've dealt {hero.power} damage to the {goblin.name}.")
-                if goblin.alive(goblin.health):
+                print(f"You've dealt {hero.dealdamage(goblin)} damage to {goblin.name}.")
+                if goblin.alive():
                     print("The goblin has been murdered. His only crime was being a goblin.")
             
-            if user_input == "2":
+            elif user_input == "2":
                 print(f"You stare at the goblin. Menacingly. You even throw up a gang sign or two. He freaks the fudge out and attacks you out of sheer terror.")
             
-            if user_input == "3":
+            elif user_input == "3":
                 print(f"Seriously? You're just going to run away? Coward. COWAAAAAAAAAAAAAAAAARD!!!")
-                break
+                exit()
             
+            else:
+                print("Hey bud. That wasn't one of the options you were given. Learn the rules!")
+
             if goblin.health > 0:
-                goblin.attack(goblin.power, hero)
-                print(f"The goblin does {goblin.power} damage to you!")
+                print(f"The goblin does {goblin.dealdamage(hero)} damage to {hero.name}!")
+                if hero.alive():
+                    print("")
+                    print("Oh wow you died. No one could have seen that coming. That's actually pretty amazing considering this is the first encounter. I guess you wanted to see all the different dialogue. Never forget that you deserve to be happy. If you're not happy now, I hope you will be one day.")
+                    exit()
+    
 
     goblin_battle()
 
@@ -103,8 +154,9 @@ def main():
 
     def berserker_battle():
         while hero.health > 0 and berserker.health > 0:
-            berserker.print_status(berserker.name, berserker.health, berserker.power)
-            hero.print_status(hero.name, hero.health, hero.power)
+            print("")
+            berserker.print_status()
+            hero.print_status()
             print("")
             print("Type the number of the action you wish to take.")
             print("1. Attack")
@@ -114,20 +166,26 @@ def main():
             user_input = input("")
 
             if user_input == "1":
-                hero.attack(hero.power, berserker)
-                print(f"You've dealt {hero.power} to the {berserker.name}.")
-                if berserker.alive(berserker.health):
+                print(f"You've dealt {hero.dealdamage(berserker)} damage to the {berserker.name}.")
+                if berserker.alive():
                     print("The berserker has been slain!")
-            if user_input == "2":
+            elif user_input == "2":
                 print("You insult the Berserker's mother and start stomping on his flowers while, for some reason, throwing up gang signs. Unprovoked, the Berserker attacks!")
 
-            if user_input == "3":
+            elif user_input == "3":
                 print("Oh, oh, what?! You murder a goblin in cold blood without a problem but now all of a sudden you have a problem -DEFENDING YOURSELF- against a Berserker? Seriously? What are you, racist against goblins? I don't have time for bigots. Get out of here.")
-                break
+                exit()
             
+            else:
+                print("Oh boy. That's not one of the options you were given and yet you did it anyway. So uh...don't do that.")
+
             if berserker.health > 0:
-                berserker.attack(berserker.power, hero)
-                print(f"The {berserker.name} deals {berserker.power} damage to you. ")
+                print(f"The {berserker.name} deals {berserker.dealdamage(hero)} damage to you. ")
+                if hero.alive():
+                    print("")
+                    print("With your health depleted, the Berserker goes to help you up in hopes that you will explain any misunderstandings. Unfortunately he trips over one of the holes in his garden and decapitates you with his axe as he falls. So uh...yeah, you dead.")
+                    exit()
+                    
 
     berserker_battle()
     
@@ -143,8 +201,9 @@ def main():
 
     def medic_battle():
         while hero.health > 0 and medic.health > 0:
-            medic.print_status(medic.name, medic.health, medic.power)
-            hero.print_status(hero.name, hero.health, hero.power)
+            print("")
+            medic.print_status()
+            hero.print_status()
             print("")
             print("Type the number of the action you wish to take.")
             print("1. Attack")
@@ -154,24 +213,34 @@ def main():
             user_input = input("")
 
             if user_input == "1":
-                hero.attack(hero.power, medic)
-                print(f"You've dealt {hero.power} damage to the {medic.name}.")
-                if medic.alive(medic.health):
+                print(f"You've dealt {hero.dealdamage(medic)} damage to the {medic.name}.")
+                if medic.alive():
                     print("Oh wow you killed her.")
-            if user_input == "2":
+            elif user_input == "2":
                 print("Your eyes roll to the back of your head, you start foaming at the mouth and making demonic screeches while walking like a crab and snapping your imaginary claws. The Medic tries to exorcise you, horrified, which is interesting because medics don't typically do exorcism.")
 
-            if user_input == "3":
+            elif user_input == "3":
+                print("")
                 print("You try to flee like a small, worthless child but the medic tranquilizes you with...a tranquilizer...gun? What time period is this game set in? Let's say it was a dart. Anyway, she hits you with it and then you go to jail or something. Lawyer up, my man.")
-                break
+                exit()
             
+            else:
+                print("Nah don't do that. Press 1, 2, or 3.")
+
             if medic.health > 0:
-                medic.attack(medic.power, hero)
-                print(f"The {medic.name} deals {medic.power} damage to you.")
+                print(f"The {medic.name} deals {medic.dealdamage(hero)} damage to you.")
+                if hero.alive():
+                    print("")
+                    print("After finally managing to subdue you, the medic sits on the ground and breathes heavily, unsure of how she actually managed to defeat you. Before she can say anything, you use one last burst of strength to shove her backwards while also stealing her medical bag. Without hesitation, you swallow every pill, potion, and tonic in her inventory, desperate to recover your health. She stares at you in a mixture of horror and intrigue as all your wounds heal and your skin changes to a multitude of colors.")
+                    print("")
+                    print(' "...Are you oka-"')
+                    print("")
+                    print("Before she can finish her inquiry, you explode into glitter and confetti. While a fun and festive display, you are still very much dead.")
+                    print("")
+                    exit()
 
     medic_battle()
-    
-    berserker_battle()
+
     print("-" *10)
     print("Oh man! What did you do?! No one told you to do that! She's dead, bro! You're a monster! Oh sweet she has some healing potions on her.")
     print("")
