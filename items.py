@@ -1,18 +1,23 @@
 class Item():
 # class Item(name, description, health):
-    def __init__(self, name, description, health):
+    def __init__(self, name, description, health, damage):
         # super().__innit__(name, description, health)
         self.name = name
         self.description = description
         self.health = health
         self.damage = damage
 
-class Holy_Potion(Item):
-    def item_attack(self, enemy):
-        if enemy == zombie:
-            zombie.alive()
-            return true
+    def __str__(self):
+        return self.__str__()
+    
+    def use_item(self,user,enemy):
+        if self.health == 0:
+            enemy.health -= self.damage
+        if self.damage == 0:
+            user.health += self.health
+
             
+
 class Weapon():
     def __init__(self, name, description, attack):
         self.name = name
@@ -36,11 +41,12 @@ Excalibur = Weapon("Excalibur", "Legendary Sword", 20)
     #                     description="A gigantic sword not many can hold.",
     #                     power=2)
 
-class Armor:
+class Armor():
     def __init__(self, name, description, defense):
         self.name = name
         self.description = description
         self.defense = defense
+        
 
 Leather_Jerkin = Armor("Leather Jerkin", "Armor made out of fine leather", 3)
 Tattered_Cloth = Armor("Tattered Cloth", "Cloth with rips in it", 14)
@@ -61,14 +67,14 @@ Fortified_Darkness = Armor("Fortified Darkness", "Almost invisible type of darkn
 
 # shield = Armor('basic shield', 'description of shield',6)
 
-class Misc(Item):
-    def __innit__(self, name, description, health):
-        super().__innit__(name, description, health)
-       # self.health = health
+#class Misc(Item):
+    #def __innit__(self, name, description, health):
+        #super().__innit__(name, description, health)
+    # self.health = health
 
-Healing_Potion = ("Misc", "Potion that gains +25 health" 20)
+#Healing_Potion = Misc("Misc", "Potion that gains +25 health", 20)
 
-
+health_potion = Item("Health Potion", "This tastes like the blood of the innocent. Yummy!", 25, 0)
 # # this is your basic item class
 # #weapons, armor are subclasses of Item
 # class Item(name, description, health):
