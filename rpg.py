@@ -9,6 +9,8 @@ class Character:
         self.power = round(power + (stats["Strength"] * .5)) 
         self.defense = round((stats["Constitution"] * .25))
         self.evasion = (stats["Agility"] * .25) / 10
+        self.inv = inv
+        self.gil = gil
 
     def dealdamage(self, enemy):
         evade = random.random()
@@ -32,6 +34,10 @@ class Character:
     def alive(self):
         if self.health <= 0:
             return True
+    
+    def defeated(self,enemy):
+        self.inv.update(enemy.inv)
+        
 
 class Hero(Character):
         def dealdamage(self,enemy):
