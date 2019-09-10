@@ -102,6 +102,7 @@ def main():
                 if goblin.alive(goblin.health):
                     print("The goblin has been murdered. His only crime was being a goblin.")
                     for item in goblin.inv.keys():
+                    self.inv.update(Weapon[
                         # update the hero's inventory with that item
                         # this means you need to check for an item of that type (ie "weapon", "armor", etc)
                         # and add/replace that item in the hero's inventory
