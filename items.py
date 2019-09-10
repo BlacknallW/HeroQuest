@@ -1,21 +1,33 @@
-class Item:
+class Item():
 # class Item(name, description, health):
     def __init__(self, name, description, health):
         # super().__innit__(name, description, health)
         self.name = name
         self.description = description
         self.health = health
+        self.damage = damage
 
-class Weapon(Item):
-    def __init__(self, name, description, health):
-        super().__init__(name, description, health)
-        self.power = health
-        # self.power = power
+class Holy_Potion(Item):
+    def item_attack(self, enemy):
+        if enemy == zombie:
+            zombie.alive()
+            return true
+            
+class Weapon():
+    def __init__(self, name, description, attack):
+        self.name = name
+        self.description = description
+        self.attack = attack
 
-Stick = Weapon("stick", "A sharp stick that looks like it might hurt", 2)
-Great_Sword = Weapon("Great Sword", "A gigantic sword", 5)
-Flaming_Hammer = Weapon("Flaming Hammer", "Metal hammer that has some kind of flames surrounding it", 12)
-
+Stick = Weapon("Stick", "A sharp stick that looks like it might hurt", 2)
+Great_Axe = Weapon("Great Axe", "A gigantic Axe", 10)
+Flaming_Hammer = Weapon("Flaming Hammer", "Metal hammer that has some kind of flames surrounding it", 15)
+Scalpel = Weapon("Scalpel", "Doctors tool", 5)
+Bladed_Spear = Weapon("Bladed Spear", "Sharp stick with a blade on the end of it", 8)
+Slimy_Tendrils = Weapon("Slimy Tendrils", "goooooeeeyyy", 5)
+Spooky_Hands = Weapon("Spooky Hands", "infected Hands", 1)
+Shadow_Blade = Weapon("Shadow Blade", "The blade isn't even there ?!", 13)
+Excalibur = Weapon("Excalibur", "Legendary Sword", 20)
 
 
 #class Greatsword(Weapon):
@@ -24,15 +36,19 @@ Flaming_Hammer = Weapon("Flaming Hammer", "Metal hammer that has some kind of fl
     #                     description="A gigantic sword not many can hold.",
     #                     power=2)
 
-class Armor(Item):
-    def __init__(self, name, description, health):
-        # self.health = health
-        super().__init__(name, description, health)
+class Armor:
+    def __init__(self, name, description, defense):
+        self.name = name
+        self.description = description
+        self.defense = defense
 
-Leather_body_armor = Armor("Leather Armor", "Armor made out of fine leather", 5)
-Metal_body_armor = Armor("Metal Armor", "Solid metal armor", 14)
-Gold_body_armor = Armor("Gold Armor", "Rare armor that shines bright", 10)
-
+Leather_Jerkin = Armor("Leather Jerkin", "Armor made out of fine leather", 3)
+Tattered_Cloth = Armor("Tattered Cloth", "Cloth with rips in it", 14)
+Gold_Body_Armor = Armor("Gold Armor", "Rare armor that shines bright", 20)
+Iron_Pauldrons = Armor("Iron Pauldrons", "Iron Armor", 8)
+Medical_Garb = Armor("Medical Garb", "Clothes for Medical staff", 5)
+Slime = Armor("Slime", "Goo", 4)
+Fortified_Darkness = Armor("Fortified Darkness", "Almost invisible type of darkness", 20)
 
     
 
@@ -62,4 +78,5 @@ Healing_Potion = ("Misc", "Potion that gains +25 health" 20)
 #     # self.description=description
 #     # self.name=name
 
-
+holy_potion = Holy_Potion("Holy_Potion", "This potion is Holy. Tada", 0, 10)
+health_potion = Item("Health_Potion", "This potion taste like the blood of the innocent. Yummy", 25, 0)
