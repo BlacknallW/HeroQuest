@@ -301,14 +301,11 @@ def main():
             if decicion == "5":
                 print("You decide to head back out.")
                 quit = True
-                main()
+                
             
     town()#Calls town to open up and be interacted with
                 
-    print("Oh man! What did you do?! No one told you to do that! She's dead, bro! You're a monster! Oh sweet she has some healing potions on her.\n\nYou've stolen...well, can it really be called stealing if it's a corpse? Legally, I think the answer is no. Anywho, 3 healing potions aquired!\n")
-
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
-    print("You know what pairs well with senseless murder? Going into town to buy equipment with all that gil you looted from those folks who attacked you. Let's keep it civil for the moment, and put away our weapons. Well, your weapons. I'm a disembodied voice that tells you to do things, so I need weapons about as much as you need psychiatric help. Which is to say, not at all! Onward!")
 
     #Town function goes here. Swiggity swooty.
     print("Golly gee, look at you! (assumedly) Armed to the teeth and a thousand-yard stare that'd petrify Medusa herself. Now we can keep venturing forth without worrying about all of the pychopaths on the road who keep attacking you.\n\nWait, wait! Ssssshhhh! Do you hear that? \n\nSounds like a horse...or maybe...A CENTAUR!!! \n\nWATCH OUT! THAT COMPLETELY STATIONARY CENTAUR IS CHARGING RIGHT AT YOU!\n\n")
