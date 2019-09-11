@@ -168,7 +168,7 @@ def main():
                 print(f"You've dealt {hero.dealdamage(goblin)} damage to {goblin.name}.")
                 if goblin.alive():
                     hero.defeated(goblin)
-                    print("The goblin has been murdered. His only crime was being a goblin.")
+                    print("The goblin has been murdered. His only crime was being a goblin. You've picked up the Goblin's stick!" )
             
             elif user_input == "2":
                 print(f"You stare at the goblin. Menacingly. You even throw up a gang sign or two. He freaks the fudge out and attacks you out of sheer terror.")
@@ -380,6 +380,7 @@ def main():
             
             elif user_input == "4":
                 hero.use_potion()
+                
             
             else:
                 print("Nah don't do that. Press 1, 2, 3, or 4.")
