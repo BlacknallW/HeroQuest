@@ -7,12 +7,13 @@ class Character:
         self.health = health
         self.stats = stats
         self.inv = inv
-        self.power = round(power + (stats["Strength"] * .5)) + (self.inv["Weapon"])
+        self.power = round(power + (stats["Strength"] * .5)) + (self.inv["Weapon"]) #Takes base power and adds half of strength stat and damage value of weapon
         self.defense = round((stats["Constitution"] * .25) + (self.inv["Armor"] / 2))
         self.evasion = (stats["Agility"] * .25) / 10
         
 
     def dealdamage(self, enemy):
+        #factors in evasion, power, and defense to calculate if an attack hit, and how much damage it does
         evade = random.random()
         dmg_amount = self.power - enemy.defense
         if dmg_amount < 0:
@@ -35,7 +36,7 @@ class Character:
         if self.health <= 0:
             return True
     
-    def defeated(self,enemy):
+    def defeated(self,enemy): #If the enemy's weapon is stronger than yours, takes enemy's weapon. Same thing for armor. Inherits gil amount.
         if self.inv["Weapon"] > enemy.inv["Weapon"]:
             pass
         else:
@@ -92,6 +93,7 @@ class Berserker(Character):
         else:
             if self.health < 10:
                 berserking = round(self.power * 1.25)
+                #Increases Berserker's damage when his health goes below 10
                 enemy.health -= berserking
                 print("Oh God the Berserker has lost too much health and is going nuts! His damage has increased by 25%!\n")
                 return berserking
@@ -111,6 +113,7 @@ class Centaur(Character):
             print(f"{enemy.name} dodged {self.name}'s attack!")
             return dmg_amount
         else:
+            #Centaur has a 20% chance to use a special skill
             trample = random.random()
             if trample <= .20:
                 trample_damage = self.power * 1.5
@@ -122,7 +125,7 @@ class Centaur(Character):
                 return dmg_amount
 
 class Zombie(Character):
-    def alive(self, health):
+    def alive(self):
         if self.health <= 0:
             return False
 
@@ -346,7 +349,7 @@ def main():
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
 
     #Town function goes here. Swiggity swooty.
-    print("Golly gee, look at you! (assumedly) Armed to the teeth and a thousand-yard stare that'd petrify Medusa herself. Now we can keep venturing forth without worrying about all of the pychopaths on the road who keep attacking you.\n\nWait, wait! Ssssshhhh! Do you hear that? \n\nSounds like a horse...or maybe...A CENTAUR!!! \n\nWATCH OUT! THAT COMPLETELY STATIONARY CENTAUR IS CHARGING RIGHT AT YOU!\n\n")
+    print("\nGolly gee, look at you! (assumedly) Armed to the teeth and a thousand-yard stare that'd petrify Medusa herself. Now we can keep venturing forth without worrying about all of the pychopaths on the road who keep attacking you.\n\nWait, wait! Ssssshhhh! Do you hear that? \n\nSounds like a horse...or maybe...A CENTAUR!!! \n\nWATCH OUT! THAT COMPLETELY STATIONARY CENTAUR IS CHARGING RIGHT AT YOU!\n\n")
     
     def centaur_battle():
         while hero.health > 0 and centaur.health > 0:
@@ -389,5 +392,51 @@ def main():
                     exit()
 
     centaur_battle()
+
+    print("\n\n With a swift swing of your...whatever weapon you're using at this point, the Centaur draws his last breath. His screaming family flee the scene...screaming. You're doing great, Maximo! All these demented subhumans keep attacking you and you're just putting them down, bro. You know what this calls for? A stroll into the local cementary! Let's geddit!\n\nYou enter the cementary, listening to me without question for some strange reason. Probably because I'm your only ally in this cruel world, right? We've got each other's backs, you and I. Although I have no back, being a disembodied voice and all.\n\nLOOK OVER THERE! IT'S...oh it's just a zombie. I mean, it's already dead and quite unintelligent so there's no real need to-")
+    print("\n\"Good day ol' chaps! I say, what a marvelous day it is for a stroll! I should visit Reginald and his marvelous garden!\"")
+    print("\nOH NO! This zombie is sentient, intelligent, and most digustingly of all, British! Or whatever this world's equivalent of British is. Does everyone here speak some variation of like, Old English or something? Doesn't matter. KILL IT!")
+
+    def zombie_battle():
+        while hero.health > 0 and zombie.health != 0:
+            print("")
+            zombie.print_status()
+            hero.print_status()
+            print("\nType the number of the action you wish to take.")
+            print("1. Attack")
+            print("2. Wait")
+            print("3. Flee")
+            print("4. Use Health Potion")
+            print("5. Throw Health Potion at Zombie")
+            print(">")
+            user_input = input("")
+        
+            if user_input == "1":
+                print(f"You've dealt {hero.dealdamage(zombie)} damage to {zombie.name}.")
+            
+            elif user_input == "2":
+                print(f"You start doing whatever the dance from the Thriller video is called. In zombie culture, this is considered appropriation or something, and is one of the most offensive things you, as a flesh-person, can do toward the undead. With renewed vigor, the zombie attacks you like he means it.")
+            
+            elif user_input == "3":
+                print(f"You turn to run, but you have the ankles of a player in the NBA so the aforementioned ankles snap. As you fall to the ground, you try to catch yourself with your hands out, but that NBA player bone structure strikes again, so both of your wrists snap. Offended by your lack of calcium, a skellington bursts out of the ground and starts extracting your skeleton from your body, desperate to save your bones from your abusive flesh. I won't go into detail as to how painful it is, but man is it painful. In a strange turn of events, however, you're not dead. Like, you're undead, yeah, but you're still like...moving around. Just, as a skellington. Which is honestly not bad since you have all the support of your skelly bros. For once in your miserable life, you've found a group of...creatures, that care about you.")
+                exit()
+
+            elif user_input == "4":
+                hero.use_potion()
+            
+            elif user_input == "5":
+                zombie.health = 0
+                hero.defeated(zombie)
+                print("You douse the zombie with a health potion. He stares at you in shock, or maybe it just appears that way because his jaw unhinges itself. His skin starts to bubble and smoke,and a puddle of melted, rotten flesh begins to form below him. He's actually quite pleasant throughout the entire process, reasoning that this misunderstanding of hostility was probably his fault, and this is only to be expected. How disgustingly British of him.")
+            else:
+                print("Hey bud. That wasn't one of the options you were given. Learn the rules!")
+
+            if zombie.health != 0:
+                print(f"The zombie does {zombie.dealdamage(hero)} damage to {hero.name}!")
+                if hero.alive():
+                    print("")
+                    print("")
+                    exit()
+    zombie_battle()
 
 main()

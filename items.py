@@ -31,7 +31,7 @@ Flaming_Hammer = Weapon("Flaming Hammer", "Metal hammer that has some kind of fl
 Scalpel = Weapon("Scalpel", "Doctors tool", 5)
 Bladed_Spear = Weapon("Bladed Spear", "Sharp stick with a blade on the end of it", 8)
 Slimy_Tendrils = Weapon("Slimy Tendrils", "goooooeeeyyy", 5)
-Spooky_Hands = Weapon("Spooky Hands", "infected Hands", 1)
+Spooky_Hands = Weapon("Spooky Hands", "infected Hands", 10)
 Shadow_Blade = Weapon("Shadow Blade", "The blade isn't even there ?!", 13)
 Excalibur = Weapon("Excalibur", "Legendary Sword", 20)
 
