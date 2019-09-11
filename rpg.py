@@ -1,17 +1,16 @@
 import random
 from items import *
 
-
 class Character:
     def __init__(self, name, health, power, stats, inv):
         self.name = name
         self.health = health
-        self.power = power
         self.stats = stats
-        self.power = round(power + (stats["Strength"] * .5)) + (inv["Weapon"])
-        self.defense = round((stats["Constitution"] * .25)) + (inv["Armor"])
-        self.evasion = (stats["Agility"] * .5) / 10
         self.inv = inv
+        self.power = round(power + (stats["Strength"] * .5)) + (self.inv["Weapon"])
+        self.defense = round((stats["Constitution"] * .25) + (self.inv["Armor"] / 2))
+        self.evasion = (stats["Agility"] * .25) / 10
+        
 
     def dealdamage(self, enemy):
         evade = random.random()
@@ -30,7 +29,7 @@ class Character:
         return dmg_amount
 
     def print_status(self):
-        print(f"{self.name} has {self.health} health and {self.power} power.")
+        print(f"{self.name} has {self.health} health, {self.power} power, and {self.defense} defense.")
 
     def alive(self):
         if self.health <= 0:
@@ -40,12 +39,17 @@ class Character:
         if self.inv["Weapon"] > enemy.inv["Weapon"]:
             pass
         else:
-            self.inv["Weapon"] = enemy.inv["Weapon"]
+            self.power += enemy.inv["Weapon"]
+
         if self.inv["Armor"] > enemy.inv["Armor"]:
             pass
         else:
-            self.inv["Armor"] = enemy.inv["Armor"]
+            self.inv["Armor"] += enemy.inv["Armor"]
         self.inv["Gil"] += enemy.inv["Gil"]
+
+    def use_potion(self):
+        self.health += 25
+        print("You've recovered 25 health, you wimp. What, can't beat your enemy without healing? Disgusting.")
 
 class Hero(Character):
         def dealdamage(self,enemy):
@@ -86,10 +90,10 @@ class Berserker(Character):
             return dmg_amount
 
         else:
-            if self.health < 15:
-                berserking = self.power * 2
+            if self.health < 10:
+                berserking = round(self.power * 1.25)
                 enemy.health -= berserking
-                print("Oh God the Berserker has lost too much health and is going nuts! His damage has been doubled!\n")
+                print("Oh God the Berserker has lost too much health and is going nuts! His damage has increased by 25%!\n")
                 return berserking
             else:
                 enemy.health -= dmg_amount
@@ -130,16 +134,16 @@ Undead = {"Strength" : 2, "Agility" : 5, "Constitution" : 0}
 Amorphous = {"Strength" : 5, "Agility" : 30, "Constitution" : 5}
 Ogres = {"Strength" : 10, "Agility" : 3, "Constitution" : 8}
 
-hero = Hero("Maximo", 100, 5, Humans, {"Armor": Leather_Jerkin}, 999)
-goblin = Character("Goblin", 20, 2, Goblins, {"Weapon": Stick, "Armor": Tattered_Cloth}, 8)
-medic = Character("Medic", 25, 3, Humans, {"Weapon": Scalpel, "Armor": Medical_Garb}, 75)
-shadow = Character("Shadow", 1, 10, Demons, {"Weapon": Shadow_Blade, "Armor": Fortified_Darkness}, 177)
-zombie = Zombie("Zombie", 10, 1, Undead, {"Weapon": Spooky_Hands, "Armor": Tattered_Cloth}, 10)
-berserker = Berserker("Berserker", 30, 10, Humans, {"Weapon": Great_Axe, "Armor": Iron_Pauldrons}, 82)
-centaur = Centaur("Centaur", 50, 8, Centaurs, {"Weapon": Bladed_Spear, "Armor": Iron_Pauldrons}, 74)
-ogre = Character("Ogre", 80, 15, Ogres, {"Weapon": Flaming_Hammer, "Armor": Iron_Pauldrons}, 95)
-slime = Character("Slime", 25, 5, Amorphous, {"Weapon": Slimy_Tendrils, "Armor": Slime}, 143)
-frank = Character("Humans", 100, 15, Humans, {"Weapons": Excalibur, "Armor": Gold_Body_Armor}, 1000)
+hero = Hero("Maximo", 100, 10, Humans, {"Weapon": Unarmed.attack, "Armor": Leather_Jerkin.defense, "Gil": 999})
+goblin = Character("Goblin", 20, 2, Goblins, {"Weapon": Stick.attack, "Armor": Tattered_Cloth.defense, "Gil": 8})
+medic = Character("Medic", 25, 3, Humans, {"Weapon": Scalpel.attack, "Armor": Medical_Garb.defense, "Gil": 75})
+shadow = Character("Shadow", 1, 10, Demons, {"Weapon": Shadow_Blade.attack, "Armor": Fortified_Darkness.defense, "Gil":177})
+zombie = Zombie("Zombie", 10, 1, Undead, {"Weapon": Spooky_Hands.attack, "Armor": Tattered_Cloth.defense, "Gil":10})
+berserker = Berserker("Berserker", 30, 8, Humans, {"Weapon": Great_Axe.attack, "Armor": Iron_Pauldrons.defense,"Gil":82})
+centaur = Centaur("Centaur", 50, 8, Centaurs, {"Weapon": Bladed_Spear.attack, "Armor": Iron_Pauldrons.defense,"Gil":78})
+ogre = Character("Ogre", 80, 15, Ogres, {"Weapon": Flaming_Hammer.attack, "Armor": Iron_Pauldrons.defense, "Gil":95})
+slime = Character("Slime", 25, 5, Amorphous, {"Weapon": Slimy_Tendrils.attack, "Armor": Slime.defense, "Gil":143})
+frank = Character("Humans", 100, 15, Humans, {"Weapon": Excalibur.attack, "Armor": Gold_Body_Armor.defense,"Gil":1000})
 
 def main():
     print("Welcome to the world of...Frank. Yeah, just Frank. He's some guy. I guess he owns the world or something? Wild. \n\nAnyway. Your name is Maximo. I don't care what it was before, you're 'Maximo now. Hello, Maximo! \n\nOh no! A goblin is minding his own business somewhere. ASSAULT IT!!!\n\n")
@@ -153,12 +157,14 @@ def main():
             print("1. Attack")
             print("2. Wait")
             print("3. Flee")
+            print("4. Use Health Potion")
             print(">")
             user_input = input("")
         
             if user_input == "1":
                 print(f"You've dealt {hero.dealdamage(goblin)} damage to {goblin.name}.")
                 if goblin.alive():
+                    hero.defeated(goblin)
                     print("The goblin has been murdered. His only crime was being a goblin.")
             
             elif user_input == "2":
@@ -167,7 +173,10 @@ def main():
             elif user_input == "3":
                 print(f"Seriously? You're just going to run away? Coward. COWAAAAAAAAAAAAAAAAARD!!!")
                 exit()
-            
+
+            elif user_input == "4":
+                hero.use_potion()
+
             else:
                 print("Hey bud. That wasn't one of the options you were given. Learn the rules!")
 
@@ -195,12 +204,14 @@ def main():
             print("1. Attack")
             print("2. Wait")
             print("3. Flee")
+            print("4. Use Health Potion")
             print(">")
             user_input = input("")
 
             if user_input == "1":
                 print(f"You've dealt {hero.dealdamage(berserker)} damage to the {berserker.name}.")
                 if berserker.alive():
+                    hero.defeated(berserker)
                     print("The berserker has been slain!")
             elif user_input == "2":
                 print("You insult the Berserker's mother and start stomping on his flowers while, for some reason, throwing up gang signs. Unprovoked, the Berserker attacks!")
@@ -208,7 +219,10 @@ def main():
             elif user_input == "3":
                 print("Oh, oh, what?! You murder a goblin in cold blood without a problem but now all of a sudden you have a problem -DEFENDING YOURSELF- against a Berserker? Seriously? What are you, racist against goblins? I don't have time for bigots. Get out of here.")
                 exit()
-            
+
+            elif user_input == "4":
+                hero.use_potion()
+
             else:
                 print("Oh boy. That's not one of the options you were given and yet you did it anyway. So uh...don't do that.")
 
@@ -235,6 +249,7 @@ def main():
             print("1. Attack")
             print("2. Wait")
             print("3. Flee")
+            print("4. Use Health Potion")
             print(">")
             user_input = input("")
 
@@ -249,7 +264,10 @@ def main():
             elif user_input == "3":
                 print("\nYou try to flee like a small, worthless child but the medic tranquilizes you with...a tranquilizer...gun? What time period is this game set in? Let's say it was a dart. Anyway, she hits you with it and then you go to jail or something. Lawyer up, my man.")
                 exit()
-            
+
+            elif user_input == "4":
+                hero.use_potion()
+
             else:
                 print("Nah don't do that. Press 1, 2, or 3.")
 
@@ -323,7 +341,7 @@ def main():
                 quit = True
                 
             
-    # town()#Calls town to open up and be interacted with
+    town()#Calls town to open up and be interacted with
                 
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
 
@@ -340,7 +358,7 @@ def main():
             print("1. Attack")
             print("2. Wait")
             print("3. Flee")
-            print("4. Items")
+            print("4. Use Health Potion")
             print(">")
             user_input = input("")
 
@@ -350,7 +368,7 @@ def main():
                     hero.defeated(centaur)
                     print("HNNNNGH FEEL THAT ADRENALINE. DRINK HIS BLOOD.")
             elif user_input == "2":
-                print("You start screaming. Like, at the top of your lungs, like an absolute lunatic. The centaur tries to run away but you chase him down, still screaming and ripping out clumps of your hair. Like a fugitive on bath salts, you are somehow faster than the horse-person, who has no choice but to attack you.\n\n")
+                print("You start screaming. Like, at the top of your lungs, like an absolute lunatic. The centaur tries to run away but you chase him down, still screaming and ripping out clumps of your own hair. Like a fugitive on bath salts, you are somehow faster than the horse-person, who has no choice but to attack you.\n\n")
 
             elif user_input == "3":
                 print("")
@@ -358,11 +376,10 @@ def main():
                 exit()
             
             elif user_input == "4":
-                #This should be a function that opens the inventory or something.
-                pass
+                hero.use_potion()
             
             else:
-                print("Nah don't do that. Press 1, 2, 3, or 4. Yeah, you can press 4 now, so that's nice.")
+                print("Nah don't do that. Press 1, 2, 3, or 4.")
 
             if centaur.health > 0:
                 print(f"The {centaur.name} deals {centaur.dealdamage(hero)} damage to you.")
