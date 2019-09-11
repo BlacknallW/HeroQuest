@@ -10,12 +10,6 @@ class Item():
     def __str__(self):
         return self.__str__()
     
-    def use_item(self,user,enemy):
-        if self.health == 0:
-            enemy.health -= self.damage
-        if self.damage == 0:
-            user.health += self.health
-
             
 
 class Weapon():

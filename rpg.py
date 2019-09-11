@@ -57,8 +57,28 @@ class Hero(Character):
             evade = random.random()
             dmg_amount = self.power - enemy.defense
             
+            if enemy == shadow:
+                enemy.evasion = .9
+                if evade <= enemy.evasion:
+                    dmg_amount = 0
+                    enemy.health = enemy.health
+                    print(f"{enemy.name} dodged {self.name}'s attack!")
+                    return dmg_amount
+                else:
+                    if dmg_amount < 0:
+                        dmg_amount = 0
+                    critical_hit = random.random()
+                    if critical_hit <= .20:
+                        critical = (self.power * 2) - enemy.defense
+                        enemy.health -= critical            
+                        print("CRITICAL HIT!")
+                        return critical
 
-            if evade <= enemy.evasion:
+                    elif critical_hit > .20:
+                        enemy.health -= dmg_amount
+                        return dmg_amount
+
+            elif evade <= enemy.evasion:
                 dmg_amount = 0
                 enemy.health = enemy.health
                 print(f"{enemy.name} dodged {self.name}'s attack!")
@@ -435,8 +455,51 @@ def main():
                 print(f"The zombie does {zombie.dealdamage(hero)} damage to {hero.name}!")
                 if hero.alive():
                     print("")
-                    print("")
+                    print("You lost to a zombie. How does one lose to a zombie? And not just any zombie, but a -BRITISH- zombie? Ugh. \n\nThe zombie strolls up to you in his tattered British attire, and produces a pipping hot cuppa. For you non-Brits, I think that's what they call cups of tea. It's abbreviated out of sheer laziness and selfishness. Your nationality is a mystery, but you refuse the cuppa, slapping it out of his rotting hands.\n\n\"How dare you?! How...DARE YOU?! HOW DARE YOU?!\"\n\nThe posh zombie begins to foam at the mouth, his eyes glowing with a crimson mist. He tackles you to the ground and sinks his yellowed teeth into your jugular before ripping it out entirely. As your drown from your own blood filling your lungs, the last thing you hear is him apologizing. Maybe he was Canadian?\n\n")
                     exit()
     zombie_battle()
+
+    print("Before you have a moment to recover from your most recent spat, you are surrounded by pitch darkness. No matter how hard you stare into the abyss, you can't make out any figures. However...you feel the abyss stare back.\n\nA patch of obsidian shadow erupts with power, 'lighter' shadows coalescing at its 'feet' while piercing white eyes glow from the 'head' of this spectral pillar. Your surroundings are still pitch black, but this figure is inexplicably darker, with an emanating aura of dread that chills your very soul. A wicked blade of shadow forms in the creatures 'hands', seconds before it springs to attack.")
+
+    def shadow_battle():
+        while hero.health > 0 and shadow.health > 0:
+            print("")
+            shadow.print_status()
+            hero.print_status()
+            print("\nType the number of the action you wish to take.")
+            print("1. Attack")
+            print("2. Wait")
+            print("3. Flee")
+            print("4. Use Health Potion")
+            print(">")
+            user_input = input("")
+        
+            if user_input == "1":
+                print(f"You've dealt {hero.dealdamage(shadow)} damage to {shadow.name}.")
+                if shadow.alive():
+                    hero.defeated(shadow)
+                    print("No matter how many times you strike at the Shadow, your blade seems to glide through it's aetherial form. It is almost as if the Shadow is dispersing at the beginning of your strike, and reforming as it passes. Your attacks become uncoordinated and desperate while your body becomes bloodied and bruised, your veins turning black each time the spectral blade lands. In fact, it seems like the horrifying being's weapon is the only definite part of its anatomy. With your mind racing and not a second to spare, you leap backwards as the creature strikes horizontally at you. Mustering up your remaining strength, you bring your weapon down as hard you can on its blade as the attack passes you. With a sharp crack, the Shadow's sword splits in two. Tormented souls scream forth from the cracks as they travel along the blade, creating light on the otherwise obsidian surface. The Shadow itself howls in agony as the cracks continue to travel across the surface of the otherworldly horror's 'body'. Finally, the pressure of the exiting souls becomes too great, and the entire pitch black area around you shatters into luminous light.")
+            
+            elif user_input == "2":
+                print(f"There is no humor to be had in this bout. Your very existence is on the line. The Shadow takes advantage of your faltering willpower and attacks.")
+            
+            elif user_input == "3":
+                print(f"Run? And where, pray tell, are you running? You are surrounded by infinite darkness. The moment it takes to ponder this causes you to drop your defenses, leaving ample time for the Shadow to run you through with its blade. The shadows of the blade spread through your veins, consuming your very soul and converting your physical essence into darkness. With its blade now stronger, the Shadow vanishes as quickly as it came, leaving no trace of the battle that occured, nor the poor soul who fell as a result.")
+                exit()
+
+            elif user_input == "4":
+                hero.use_potion()
+
+            else:
+                print("Hey bud. That wasn't one of the options you were given. Learn the rules!")
+
+            if shadow.health > 0:
+                print(f"The {shadow.name} does {shadow.dealdamage(hero)} damage to {hero.name}!")
+                if hero.alive():
+                    print("")
+                    print("The Shadow disarms you, quite literally. The severed limb immediately turns into a shadowy mist that melds into the spectral being before you. The pain from the missing limb is muted by the sheer terror spreading through your chest. The Shadow raises its blade again, bringing it down on your remaining arm as you attempt to defend yourself. With no way to shield your vision, you have no choice but to stare at the imposing mass as it takes your head in both of its 'hands', forcing you to stare into its 'eyes'. What comes next is unspeakable pain. It feels as if your soul is slowly being torn into the smallest of pieces. You open your mouth to scream, but no sound comes out. Your vision changes, and you are now staring directly into your own petrified eyes. Your existence merges with the Shadow's as your body breaks down into spectral mist. You spend the rest of the Shadow's 'life' staring through its eyes as it grows its power, adding more victims to its ranks. The pain never subsides. Your existence is torment.")
+                    exit()
+
+    shadow_battle()
 
 main()
