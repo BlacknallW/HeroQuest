@@ -1,6 +1,7 @@
 import random
 from items import *
-
+import pickle
+import os
 class Character:
     def __init__(self, name, health, power, stats, inv):
         self.name = name
@@ -146,6 +147,7 @@ slime = Character("Slime", 25, 5, Amorphous, {"Weapon": Slimy_Tendrils.attack, "
 frank = Character("Humans", 100, 15, Humans, {"Weapon": Excalibur.attack, "Armor": Gold_Body_Armor.defense,"Gil":1000})
 
 def main():
+    
     print("Welcome to the world of...Frank. Yeah, just Frank. He's some guy. I guess he owns the world or something? Wild. \n\nAnyway. Your name is Maximo. I don't care what it was before, you're 'Maximo now. Hello, Maximo! \n\nOh no! A goblin is minding his own business somewhere. ASSAULT IT!!!\n\n")
 
     def goblin_battle():    
@@ -311,35 +313,48 @@ def main():
                     town()#Should return to town
             
             if decision == "2":#Second option to interact with townspeople| maybe also, play Blackjack cardgame for gil??
-                print("You arrive at the tavern of which sign depicts some strange grid-mouthed wooden man only having a barrel-like torso with ribbed appendages, \nonly 3 digets on each hand, hooves and some manner of sprout on his head..\n")
+                print("You arrive at the tavern of which sign depicts some strange grid-mouthed wooden man only having a barrel-like torso with ribbed appendages, \nonly 3 digits on each hand, hooves and some manner of sprout on his head..\n")
                 print("Inside you spot a table of people playing a card game while one suddenly jumps up and exclaims \"BLACKJACK!! \nIll clad individuals beckon passersby in a seedy corner and at the far end the Barkeep. ")
-                fork = input("You shrug and head inside. \n1.Approach Barkeep \nReturn. Sit and play cards\n ")
+                fork = input("You shrug and head inside. \n1.Sit and play cards \nReturn. Approach Barkeep\n ")
                 if fork == "1":
-                    exploration +=1
-                    print("You have a seat and chat with the Barkeep a while.\n ")
+                    print("You sit and make outlandish taunts and brags to the VERY visibly champion; challenging him to a one on one.\n ")
+                    #blackjack()
+
+                    #town()
                 else:
-                    print("You sit and play cards for a while then leave.\n ")
+                    print("You have a seat and the Barkeep introduces himself as \"B.B Rodriguez\" named after the Tavern\'s founder. Maximo, grimaces and does the same then proceeds sit upon the stool.\n  After getting a drink, he begins to spin tales; \'alternative\' versions of your recent events. A enamored crowd draws story, after story. Now, after several drinks being filled to satisfaction,\n You \'accidentally\' knock over your drink starting a quarrel that erupts into a brawl!\n You slip out during the confusion with a smirk on your face then snicker and mubble to yourself \'Heh, heh... every time.")
                     town()#Should return to town
             
             if decision == "3":#Shop choice
                 print("You wander inside where you see a varied pathora of items adorning the shelves when burly man adorned in a Jester\'s costume with a strange momochrome palette calls you to the counter.")
-                print("He looks you up and down and proceeds to flip the open/closed sign and draws the blinds. He then states \"I may be a fool but, business is business.\" as he pulls out a rather large chest from under the counter")
+                print("He looks you up and down and proceeds to flip the open/closed sign and draws the curtians. He then states \"I may be a fool but, business is business.\" as he pulls out a rather large chest from under the counter")
                 tree = input("Now, what're ya buyin?\n 1. Potion\n Return. Leave shop\n ")
                 if tree == "1":#and gil > item price
                     print("Is that all, Stanger?\n") #item += inv| print("obtained {name.item} you now have %s of them") need dictionary of items to add
                 #elif tree == "1": #and gil < item price
-                    print("Not enough gil, Stranger!\n") # stops item from being perchased| allows more item selection
+                    #print("Not enough gil, Stranger!\n") # stops item from being perchased| allows more item selection
                 
                     print("Heh, heh, heh... Thank you!!\n")
                     town()#Should return to town
             
             if decision == "4":
-                print("Closed for revnovations\n")#Could be used for save feature| try: f = open("sav.txt") print(f.(write()) finally: f.close()
-            
+                print("The sign on the door reads: \"Closed for revnovations\" You scoffed and barge in anyway.\n Oh,! I'm terribly sorry sir, we\'re currently spring cleaning and updating rooms! You stare back blankly.")
+                fork = input("1. To Save \n Return. Take a hint")
+                if fork == "1":
+                    print("You decide to ignore them and push past locking yourself into a freshly remade room.\n")
+                    hero.health = 100
+                    pickle.dump(hero, open("sav.dat", "wb"))#HERO STATUS REPLACES "BLANK!!"
+                    input("...\n")
+                    print("Ahhh..! You slept like a log!\n")
+                    hero.print_status()
+                
+                else:
+                    print("You silently turn around and leave..\n")
+                    town()
+
             if decision == "5":
                 print("You decide to head back out.")
-                quit = True
-                
+                quit = True            
             
     town()#Calls town to open up and be interacted with
                 
@@ -389,5 +404,14 @@ def main():
                     exit()
 
     centaur_battle()
-
 main()
+"""def loader():
+        load = input("Would you like to load your data?\n 1.Load Save \n Return. To continue.")
+    if load == "1":
+        try:
+            hero = pickle.load(open("sav.dat", "rb"))
+            town()#yes should trigger a try block for saved data returning a message of "no save data found!" if none exists. if data is present do town()
+        except:
+            print("No save data found!")
+    else:
+        main()"""
