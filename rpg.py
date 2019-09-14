@@ -376,7 +376,6 @@ def main():
             if decicion == "5":
                 print("You decide to head back out.")
                 quit = True
-                main()
             
     town()#Calls town to open up and be interacted with
                 
