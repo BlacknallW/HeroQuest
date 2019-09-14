@@ -170,7 +170,6 @@ slime = Character("Slime", 25, 5, Amorphous, {"Weapon": Slimy_Tendrils.attack, "
 frank = Character("Humans", 100, 15, Humans, {"Weapon": Excalibur.attack, "Armor": Gold_Body_Armor.defense,"Gil":1000})
 
 def main():
-    
     print("Welcome to the world of...Frank. Yeah, just Frank. He's some guy. I guess he owns the world or something? Wild. \n\nAnyway. Your name is Maximo. I don't care what it was before, you're 'Maximo now. Hello, Maximo! \n\nOh no! A goblin is minding his own business somewhere. ASSAULT IT!!!\n\n")
 
     def goblin_battle():    
@@ -309,7 +308,6 @@ def main():
     print("Oh man! What did you do?! No one told you to do that! She's dead, bro! You're a monster! Oh sweet she has some healing potions on her.\n\nYou've stolen...well, can it really be called stealing if it's a corpse? Legally, I think the answer is no. Anywho, 3 healing potions aquired!\n")
 
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
-    print("You know what pairs well with senseless murder? Going into town to buy equipment with all that gil you looted from those folks who attacked you. Let's keep it civil for the moment, and put away our weapons. Well, your weapons. I'm a disembodied voice that tells you to do things, so I need weapons about as much as you need psychiatric help. Which is to say, not at all! Onward!")
     def town():#The currently broken structure of which to access the town interface
         print("You can see familliar structures in the distance and start off toward them.")
         input("Press \'Return'")
@@ -324,9 +322,9 @@ def main():
             print("5. leave this place")
             print("\n")
             print("Now, what would you like to do?\n ")
-            decision = input("")
+            decicion = input("")
             
-            if decision == "1":#Option to speak with villagers| hopefully also, events to get items and gil
+            if decicion == "1":#Option to speak with villagers| hopefully also, events to get items and gil
                 fork = input("You arrive at the Rie Square! There is a boy on a soap-box that\'s grabbed your attention. \n1. Interact\n Return. Continue strolling\n ")
                 if fork == "1":
                     exploration +=1
@@ -335,7 +333,7 @@ def main():
                     print("You decide to keep wandering around..\n")
                     town()#Should return to town
             
-            if decision == "2":#Second option to interact with townspeople| maybe also, play Blackjack cardgame for gil??
+            if decicion == "2":#Second option to interact with townspeople| maybe also, play Blackjack cardgame for gil??
                 print("You arrive at the tavern of which sign depicts some strange grid-mouthed wooden man only having a barrel-like torso with ribbed appendages, \nonly 3 digits on each hand, hooves and some manner of sprout on his head..\n")
                 print("Inside you spot a table of people playing a card game while one suddenly jumps up and exclaims \"BLACKJACK!! \nIll clad individuals beckon passersby in a seedy corner and at the far end the Barkeep. ")
                 fork = input("You shrug and head inside. \n1.Sit and play cards \nReturn. Approach Barkeep\n ")
@@ -347,20 +345,20 @@ def main():
                 else:
                     print("You have a seat and the Barkeep introduces himself as \"B.B Rodriguez\" named after the Tavern\'s founder. Maximo, grimaces and does the same then proceeds sit upon the stool.\n  After getting a drink, he begins to spin tales; \'alternative\' versions of your recent events. A enamored crowd draws story, after story. Now, after several drinks being filled to satisfaction,\n You \'accidentally\' knock over your drink starting a quarrel that erupts into a brawl!\n You slip out during the confusion with a smirk on your face then snicker and mubble to yourself \'Heh, heh... every time.")
                     town()#Should return to town
-            
-            if decision == "3":#Shop choice
+                           
+            if decicion == "3":#Shop choice
                 print("You wander inside where you see a varied pathora of items adorning the shelves when burly man adorned in a Jester\'s costume with a strange momochrome palette calls you to the counter.")
                 print("He looks you up and down and proceeds to flip the open/closed sign and draws the curtians. He then states \"I may be a fool but, business is business.\" as he pulls out a rather large chest from under the counter")
                 tree = input("Now, what're ya buyin?\n 1. Potion\n Return. Leave shop\n ")
                 if tree == "1":#and gil > item price
                     print("Is that all, Stanger?\n") #item += inv| print("obtained {name.item} you now have %s of them") need dictionary of items to add
                 #elif tree == "1": #and gil < item price
-                    #print("Not enough gil, Stranger!\n") # stops item from being perchased| allows more item selection
+                    print("Not enough gil, Stranger!\n") # stops item from being perchased| allows more item selection
                 
                     print("Heh, heh, heh... Thank you!!\n")
                     town()#Should return to town
             
-            if decision == "4":
+            if decicion == "4":
                 print("The sign on the door reads: \"Closed for revnovations\" You scoffed and barge in anyway.\n Oh,! I'm terribly sorry sir, we\'re currently spring cleaning and updating rooms! You stare back blankly.")
                 fork = input("1. To Save \n Return. Take a hint")
                 if fork == "1":
@@ -374,12 +372,14 @@ def main():
                 else:
                     print("You silently turn around and leave..\n")
                     town()
-
-            if decision == "5":
+            
+            if decicion == "5":
                 print("You decide to head back out.")
-                quit = True            
+                quit = True
+                main()
             
     town()#Calls town to open up and be interacted with
+                
                 
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
 
@@ -428,7 +428,6 @@ def main():
                     exit()
 
     centaur_battle()
-
 
     print("\n\n With a swift swing of your...whatever weapon you're using at this point, the Centaur draws his last breath. His screaming family flee the scene...screaming. You're doing great, Maximo! All these demented subhumans keep attacking you and you're just putting them down, bro. You know what this calls for? A stroll into the local cementary! Let's geddit!\n\nYou enter the cementary, listening to me without question for some strange reason. Probably because I'm your only ally in this cruel world, right? We've got each other's backs, you and I. Although I have no back, being a disembodied voice and all.\n\nLOOK OVER THERE! IT'S...oh it's just a zombie. I mean, it's already dead and quite unintelligent so there's no real need to-")
     print("\n\"Good day ol' chaps! I say, what a marvelous day it is for a stroll! I should visit Reginald and his marvelous garden!\"")
@@ -520,3 +519,13 @@ def main():
     shadow_battle()
 
 main()
+"""def loader():
+        load = input("Would you like to load your data?\n 1.Load Save \n Return. To continue.")
+    if load == "1":
+        try:
+            hero = pickle.load(open("sav.dat", "rb"))
+            town()#yes should trigger a try block for saved data returning a message of "no save data found!" if none exists. if data is present do town()
+        except:
+            print("No save data found!")
+    else:
+        main()"""
