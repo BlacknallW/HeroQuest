@@ -70,7 +70,7 @@ class Hero(Character):
                     critical_hit = random.random()
                     if critical_hit <= .20:
                         critical = (self.power * 2) - enemy.defense
-                        enemy.health -= critical            
+                        enemy.health -= critical                
                         print("CRITICAL HIT!")
                         return critical
 
