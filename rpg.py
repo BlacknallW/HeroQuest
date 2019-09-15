@@ -309,7 +309,7 @@ def main():
     print("Oh man! What did you do?! No one told you to do that! She's dead, bro! You're a monster! Oh sweet she has some healing potions on her.\n\nYou've stolen...well, can it really be called stealing if it's a corpse? Legally, I think the answer is no. Anywho, 3 healing potions aquired!\n")
 
     #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
-    print("You know what pairs well with senseless murder? Going into town to buy equipment with all that gil you looted from those folks who attacked you. Let's keep it civil for the moment, and put away our weapons. Well, your weapons. I'm a disembodied voice that tells you to do things, so I need weapons about as much as you need psychiatric help. Which is to say, not at all! Onward!")
+    print("You know what pairs well with senseless murder? Going into town to buy equipment with all that gil you looted from those folks who attacked you. Let's keep it civil for the moment, and put away our weapons. Well, your weapons. I'm a disembodied voice that tells you to do things, so I need weapons about as much as you need psychiatric help. Which is to say, not at all! Onward!\n\n")
     def town():#The currently broken structure of which to access the town interface
         print("You can see familliar structures in the distance and start off toward them.")
         input("Press \'Return'")
@@ -330,7 +330,9 @@ def main():
                 fork = input("You arrive at the Rie Square! There is a boy on a soap-box that\'s grabbed your attention. \n1. Interact\n Return. Continue strolling\n ")
                 if fork == "1":
                     exploration +=1
-                    print("You argue passionately until a crowd forms. Then knock over the box and in the confusion \'borrowed\' some loose change.\n ") # {name.gil} += 21 print("you now have %s gil!")
+                    print("You argue passionately until a crowd forms. Then knock over the box and in the confusion \'borrowed\' some loose change.\n ")
+                    hero.inv["Gil"] += 21
+                    print(f"You stole 21 gil, giving you a total of {hero.inv['Gil']} Gil.\n\n")
                 else:
                     print("You decide to keep wandering around..\n")
                     town()#Should return to town
@@ -381,9 +383,7 @@ def main():
             
     town()#Calls town to open up and be interacted with
                 
-    #Add healing potions to inventory, probably with hero.inventory.update({"Potion": Healing Potion}) or something to that effect.
 
-    #Town function goes here. Swiggity swooty.
     print("\nGolly gee, look at you! (assumedly) Armed to the teeth and a thousand-yard stare that'd petrify Medusa herself. Now we can keep venturing forth without worrying about all of the pychopaths on the road who keep attacking you.\n\nWait, wait! Ssssshhhh! Do you hear that? \n\nSounds like a horse...or maybe...A CENTAUR!!! \n\nWATCH OUT! THAT COMPLETELY STATIONARY CENTAUR IS CHARGING RIGHT AT YOU!\n\n")
     
     def centaur_battle():
@@ -464,7 +464,7 @@ def main():
             elif user_input == "5":
                 zombie.health = 0
                 hero.defeated(zombie)
-                print("You douse the zombie with a health potion. He stares at you in shock, or maybe it just appears that way because his jaw unhinges itself. His skin starts to bubble and smoke,and a puddle of melted, rotten flesh begins to form below him. He's actually quite pleasant throughout the entire process, reasoning that this misunderstanding of hostility was probably his fault, and this is only to be expected. How disgustingly British of him.")
+                print("You douse the zombie with a health potion. He stares at you in shock, or maybe it just appears that way because his jaw unhinges itself. His skin starts to bubble and smoke,and a puddle of melted, rotten flesh begins to form below him. He's actually quite pleasant throughout the entire process, reasoning that this misunderstanding of hostility was probably his fault, and this is only to be expected. How disgustingly British of him.\n\n")
             else:
                 print("Hey bud. That wasn't one of the options you were given. Learn the rules!")
 
@@ -495,7 +495,7 @@ def main():
                 print(f"You've dealt {hero.dealdamage(shadow)} damage to {shadow.name}.")
                 if shadow.alive():
                     hero.defeated(shadow)
-                    print("No matter how many times you strike at the Shadow, your blade seems to glide through it's aetherial form. It is almost as if the Shadow is dispersing at the beginning of your strike, and reforming as it passes. Your attacks become uncoordinated and desperate while your body becomes bloodied and bruised, your veins turning black each time the spectral blade lands. In fact, it seems like the horrifying being's weapon is the only definite part of its anatomy. With your mind racing and not a second to spare, you leap backwards as the creature strikes horizontally at you. Mustering up your remaining strength, you bring your weapon down as hard you can on its blade as the attack passes you. With a sharp crack, the Shadow's sword splits in two. Tormented souls scream forth from the cracks as they travel along the blade, creating light on the otherwise obsidian surface. The Shadow itself howls in agony as the cracks continue to travel across the surface of the otherworldly horror's 'body'. Finally, the pressure of the exiting souls becomes too great, and the entire pitch black area around you shatters into luminous light.")
+                    print("No matter how many times you strike at the Shadow, your blade seems to glide through it's aetherial form. It is almost as if the Shadow is dispersing at the beginning of your strike, and reforming as it passes. Your attacks become uncoordinated and desperate while your body becomes bloodied and bruised, your veins turning black each time the spectral blade lands. In fact, it seems like the horrifying being's weapon is the only definite part of its anatomy. \n\nWith your mind racing and not a second to spare, you leap backwards as the creature strikes horizontally at you. Mustering up your remaining strength, you bring your weapon down as hard you can on its blade as the attack passes you. With a sharp crack, the Shadow's sword splits in two. Tormented souls scream forth from the cracks as they travel along the blade, creating light on the otherwise obsidian surface. The Shadow itself howls in agony as the cracks continue to travel across the surface of the otherworldly horror's 'body'. Finally, the pressure of the exiting souls becomes too great, and the entire pitch black area around you shatters into luminous light.")
             
             elif user_input == "2":
                 print(f"There is no humor to be had in this bout. Your very existence is on the line. The Shadow takes advantage of your faltering willpower and attacks.")
