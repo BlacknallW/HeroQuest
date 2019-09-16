@@ -53,6 +53,3 @@ Fortified_Darkness = Armor("Fortified Darkness", "Almost invisible type of darkn
 
 
 health_potion = Item("Health Potion", "This tastes like the blood of the innocent. Yummy!", 25, 0)
-
-
-health_potion = Item("Health_Potion", "This potion taste like the blood of the innocent. Yummy", 25, 0)
