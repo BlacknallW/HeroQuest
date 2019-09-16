@@ -495,8 +495,8 @@ def main():
                 print(f"You've dealt {hero.dealdamage(shadow)} damage to {shadow.name}.")
                 if shadow.alive():
                     hero.defeated(shadow)
-                    print("No matter how many times you strike at the Shadow, your blade seems to glide through it's aetherial form. It is almost as if the Shadow is dispersing at the beginning of your strike, and reforming as it passes. Your attacks become uncoordinated and desperate while your body becomes bloodied and bruised, your veins turning black each time the spectral blade lands. In fact, it seems like the horrifying being's weapon is the only definite part of its anatomy. \n\nWith your mind racing and not a second to spare, you leap backwards as the creature strikes horizontally at you. Mustering up your remaining strength, you bring your weapon down as hard you can on its blade as the attack passes you. With a sharp crack, the Shadow's sword splits in two. Tormented souls scream forth from the cracks as they travel along the blade, creating light on the otherwise obsidian surface. The Shadow itself howls in agony as the cracks continue to travel across the surface of the otherworldly horror's 'body'. Finally, the pressure of the exiting souls becomes too great, and the entire pitch black area around you shatters into luminous light.")
-            
+                    print("No matter how many times you strike at the Shadow, your blade seems to glide through it's aetherial form. It is almost as if the Shadow is dispersing at the beginning of your strike, and reforming as it passes. Your attacks become uncoordinated and desperate while your body becomes bloodied and bruised, your veins turning black each time the spectral blade lands. In fact, it seems like the horrifying being's weapon is the only definite part of its anatomy. \n\nWith your mind racing and not a second to spare, you leap backwards as the creature strikes horizontally at you. Mustering up your remaining strength, you bring your weapon down as hard you can on its blade as the attack passes you. With a sharp crack, the Shadow's sword splits in two. Tormented souls scream forth from the cracks as they travel along the blade, creating light on the otherwise obsidian surface. The Shadow itself howls in agony as the cracks continue to travel across the surface of the otherworldly horror's 'body'. Finally, the pressure of the exiting souls becomes too great, and the entire pitch black area around you shatters into luminous light.\n\n")
+                
             elif user_input == "2":
                 print(f"There is no humor to be had in this bout. Your very existence is on the line. The Shadow takes advantage of your faltering willpower and attacks.")
             
@@ -518,5 +518,9 @@ def main():
                     exit()
 
     shadow_battle()
+
+    print("Oh man. That was...that was pretty intense. Like, no joke, man. I thought that was it for us. Well, I mean you. I'm just the narrator so I'm omnipresent or whatever, and am never in any real danger. You, on the other hand...\n\n")
+    print("Ah well! A little trauma never hurt anyone so you should be better because of it! Like my father used to say, \"Misery builds character\". And you, sir, have enough character to fill a therapist's waiting room tenfold. Speaking of which, let's go back into town to relax a bit. You know, really take the edge off of almost being assimilated into an eldritch horror.\n\n")
+
 
 main()
